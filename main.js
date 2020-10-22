@@ -7,18 +7,10 @@ class Node {
     }
 }
 
-let root = new Node(1);
-root.left = new Node(2);
-root.right = new Node(3); 
-root.left.left = new Node(4);
-root.left.right = new Node(5); 
-root.right.left = new Node(6); 
-root.right.right = new Node(7);
+function createNode(value){
+    return(new Node(value));
+}
 
-console.log("LCA(4, 5) = " +findLCA(root, 4, 5).data);
-console.log("LCA(4, 6) = " +findLCA(root, 4, 6).data); 
-console.log("LCA(3, 4) = " +findLCA(root, 3, 4).data); 
-console.log("LCA(2, 4) = " +findLCA(root, 2, 4).data);
 
 function findLCA(root, n1, n2){
     if(root == null){
@@ -38,3 +30,6 @@ function findLCA(root, n1, n2){
     }
     return rightLCA;
 }
+
+module.exports.createNode = createNode;
+module.exports.findLCA = findLCA;
