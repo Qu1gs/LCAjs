@@ -1,34 +1,48 @@
 
 class Node {
-    constructor(value) {
-        this.data = value;
-        this.left = null;
-        this.right = null;
+    constructor(key, value, children) {
+        this.key = key;
+        this.value = value
+        this.children = children;
     }
 }
 
-function createNode(value){
-    return(new Node(value));
+function createNode(key, value, children){
+    return(new Node(key, value, children));
 }
 
 
-function findLCA(root, n1, n2){
-    if(root == null){
+function findLCA(root, node1, node2){
+    if(root == null || node1 == null || node2 == null){
         return null;
     }
-    if(root.data == n1 || root.data == n2){
-        return root;
+    result = path(root, node1, node2)
+    if (result != null){
+        return result
     }
-    var leftLCA = findLCA(root.left, n1, n2);
-    var rightLCA = findLCA(root.right, n1, n2);
+    return null
+}
 
-    if(leftLCA != null && rightLCA != null){
-        return root;
+function path(currentNode, node1, node2){
+    var branches = 0;
+    if(currentNode.children != null){
+        for(var i = 0; i < currentNode.children.length; i++){
+            result = path(currentNode.children[i], node1, node2)
+            if (result != null){
+                return result
+            }
+            else {
+                branches++;
+            }
+        }
     }
-    if(leftLCA != null){
-        return leftLCA;
+    if(currentNode.key == node1.key || currentNode.key == node2.key){
+        branches++;
     }
-    return rightLCA;
+    if(branches > 1){
+        return currentNode
+    }
+    return null;
 }
 
 module.exports.createNode = createNode;
